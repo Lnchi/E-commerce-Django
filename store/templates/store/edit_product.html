@@ -1,0 +1,59 @@
+{% extends 'base.html' %} 
+{% block content%}
+
+
+<div class="container-fluid pt-5">
+    <div class="text-center mb-4">
+        <h2 class="section-title px-5 mb-5"><span class="px-2">EDIT PRODUCT</span></h2>
+    </div>
+
+    <div class="row justify-content-center px-xl-5">
+        <div class="col-lg-7 mb-5">
+            <div class="contact-form ">
+                <div id="success"></div>
+                <form id="edit_product_form" method="POST" action="{% url 'product_edit' slug=product.slug %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {% if messages %}
+                    <ul class="messages alert alert-success mt-3" id="success-message">
+                        {% for message in messages %}
+                            <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                    
+                    <div class="form-group border px-2">
+                        {{ edit_product_form.name }}
+                    </div>
+                    <div class="form-group border px-2">
+                        {{ edit_product_form.slug }}
+                    </div>
+                    <div class="form-group border px-2">
+                        {{ edit_product_form.price }}
+                    </div>
+                    <div class="form-group border px-2">
+                        {{ edit_product_form.stock }}
+                    </div>
+                    <div class="form-group border px-2">
+                        {{ edit_product_form.description }}
+                    </div>
+                    <div class="form-group border px-2">
+                        {{ edit_product_form.sizes }}
+                    </div>
+                    <div class="form-group border px-2">
+                        {{ edit_product_form.colors }}
+                    </div>
+                    <div class="form-group border px-2">
+                        {{ edit_product_form.thumbnail }}
+                    </div>
+                    <div class="form-group border px-2">
+                        {{ edit_product_form.out_of_stock }}
+                    </div>
+                    <div>
+                        <button class="btn btn-primary py-2 px-4" type="submit" id="sendMessageButton">Edit Product</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

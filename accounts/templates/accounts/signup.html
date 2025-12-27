@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="form-bg">
+   <div class="container">
+       <div class="row justify-content-center">
+         <div class="col-md-9">
+              <div class="form-container">
+                   <div class="left-content">
+                       <h3 class="title">LYNDA Shop</h3>
+                       <h5 class="sub-title">Salut, c'est LYNDA Shop ! Connecte-toi ou crée ton compte</h5>
+                   </div>
+                   <div class="right-content">
+                       <h3 class="form-title">S'inscrire</h3>
+                       <form method="POST" class="form-horizontal">
+                           {% csrf_token %}
+                           <div class="form-group">
+                               <label for="id_username">Identifiant</label>
+                               {% comment %} En Django, l'appel à {{ form.username }}, génère automatiquement une balises <input> correspondante. {% endcomment %}
+                               {{ form.username }}
+                           </div>
+                           <div class="form-group">
+                               <label for="id_email">Email</label>
+                               {{ form.email }}
+                           </div>
+                           <div class="form-group">
+                               <label for="id_password1">Mot de passe</label>
+                               {{ form.password1 }}
+                           </div>
+                           <div class="form-group">
+                               <label for="id_password2">Confirmer mot de passe</label>
+                               {{ form.password2 }}
+                           </div>
+                           {% if form.errors %}
+                           <div class="error-messages">
+                              <ul>
+                              {% for field,errors in form.errors.items %}
+                               {% for error in errors %}
+                               {% comment %} si un champ spécifique a plusieurs erreurs, la deuxième boucle affichera chaque message d'erreur de manière individuelle pour ce champ. {% endcomment %}
+                                 <li style="color: red;">{{ error }}</li>
+                               {% endfor %}
+                              {% endfor %}
+                              </ul>
+                           </div>
+                           {% endif %}
+                           <input class="btn signin" type="submit" value="M'inscrire">
+                           <div class="remember-me">
+                               <input type="checkbox" class="checkbox">
+                               <span class="check-label">Se souvenir de moi</span>
+                           </div>
+                       </form>
+                     
+                       <span class="signup-link">Tu as un compte ? Connecte-toi <a href="{% url 'login' %}">ici</a></span>
+                   </div>
+               </div>
+           </div>
+       </div>
+   </div>
+</div>
+<script> 
+    
+   var form_fields = document.getElementsByTagName('input');
+   form_fields[1].placeholder = 'Nom d\'utilisateur';
+   form_fields[2].placeholder = 'Email';
+   form_fields[3].placeholder = 'Saisir le mot de passe';
+   form_fields[4].placeholder = 'Confirmer le mot de passe';
+   for (var i = 1; i < form_fields.length; i++) {
+      form_fields[i].className += ' form-control';
+   }
+</script>
+
+{% endblock %}

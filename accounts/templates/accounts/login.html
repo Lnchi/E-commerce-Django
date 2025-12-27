@@ -1,0 +1,54 @@
+
+{% extends 'base.html' %}
+{% block content %}
+<div class="form-bg">
+   <div class="container">
+       <div class="row justify-content-center"> <!-- justify-content-center pour centrer -->
+         <div class="col-md-offset-2 col-md-8"> <!-- col-md-8 pour une largeur de 8 colonnes -->
+              <div class="form-container">
+                   <div class="left-content">
+                       <h3 class="title">LYNDA Shop</h3>
+                       <h5 class="sub-title">Salut, C'est LYNDA Shop ! Connecte-toi ou crée ton compte</h5>
+                   </div>
+                   <div class="right-content">
+                       <h3 class="form-title">Me connecter</h3>
+                       <form method="POST" class="form-horizontal">
+                        {% comment %} 
+                           Tag permet de rajouter un jeton invisible qui est envoyé avec la requete: permet de s'assurer pour des raisons de sécurité que la requete n'a pas été intercepté (modifiée) au cours de route 
+                        {% endcomment %}
+                        {% csrf_token %}
+                           <div class="form-group">
+                               <label for="id_username">Identifiant</label>                            
+                                {{ form.username }} 
+                               <input type="text" id="id_username" name="username" class="form-control">
+                           </div>
+                           <div class="form-group">
+                               <label for="id_password1">Mot de passe</label>
+                                {{ form.password1 }}
+                                <input type="password" id="id_password1" name="password1" class="form-control">
+                           </div>
+                             {% if messages %}
+                               {% for message in messages %}
+                               <p class="info-message"> {{ message }} </p>
+                               {% endfor %}
+                             {% endif %}
+                           <button class="btn signin">Me connecter</button>
+                           <a href="" class="forgot">Mot de passe oublié ?</a>
+                       </form>
+                       
+                       <span class="signup-link">Tu n'as pas de compte ? Inscris-toi<a href="{% url 'signup' %}">  ici</a>
+                        <p> Enregistrez-vous sur notre site pour suivre vos commandes et consulter leur historique. Remplissez les champs requis pour créer votre compte, facilitant ainsi vos futurs achats.</p></span>
+                 </div>
+               </div>
+            </div>
+       </div>
+   </div>
+</div>
+<script>
+   var form_fields = document.getElementsByTagName('input'); //retourne une liste de tous les éléments HTML de type <input> présents dans le document.
+   form_fields[2].placeholder = 'Nom d\'utilisateur';
+   form_fields[3].placeholder = 'Mot de passe';
+</script>
+{% endblock %}
+
+

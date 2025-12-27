@@ -1,0 +1,66 @@
+{% extends 'base.html' %} 
+{% block content%}
+{% comment %} product est une instance du Product du model correspond à une entrée {% endcomment %}
+<!-- Section-->
+
+<section class="py-5">
+    {% if messages %}
+         {% for message in messages %}
+            <p class="success-message"> {{ message }} </p>
+         {% endfor %}
+    {% endif %}
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="row gx-4 gx-lg-5 align-items-center">
+            <div class="col-md-5"><img class="card-img-top mb-5 mb-md-0" src="{{product.thumbnail.url}}" alt="{{product.name}}" /></div>
+            <div class="col-md-6">
+                <div class="medium mb-1">{{product.stock}} Articles(s) en stock</div>
+                <h1 class="display-5 fw-bolder">Shop item : {{product.name}}</h1>
+                <div class="fs-5 mb-5">
+                    <!--<span class="text-decoration-line-through">$45.00</span> -->
+                    <span>{{product.price}} Da</span>
+                </div>
+                <p class="lead">{{product.description}}</p>
+                {%if user.is_authenticated %}
+                <div class="d-flex">
+                    <input class="form-control text-center me-3" id="inputQuantity" type="num" value="1" style="max-width: 3rem" />
+                    <a href="{% url 'add_to_cart' product.slug %}">
+                        <button class="btn btn-outline-dark flex-shrink-0" type="button">
+                            <i class="bi-cart-fill me-1"></i>
+                             Ajouter à mon panier 
+                         </button>
+                     </a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Related items section-->
+<section class="py-5 bg-light">
+    <div class="container px-4 px-lg-5 mt-5">
+        <h2 class="fw-bolder mb-4">Articles similaires</h2>
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 justify-content-center">
+            {% for product in related_products %}
+            <div class="col mb-5">
+                <div class="card h-100">
+                    <!-- Product image-->
+                    <img class="card-img-top" src="{{ product.thumbnail.url }}" alt="{{ product.name }}" />
+                    <!-- Product details-->
+                    <div class="card-body p-4">
+                        <div class="text-center">
+                            <!-- Product name-->
+                            <h5 class="fw-bolder">{{ product.name }}</h5>
+                            <!-- Product price-->
+                        </div>
+                    </div>
+                    <!-- Product actions-->
+                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{{ product.get_absolute_url }}">View Item</a></div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

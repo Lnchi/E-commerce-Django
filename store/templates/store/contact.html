@@ -1,0 +1,56 @@
+{% extends 'base.html' %} 
+{% block content%}
+
+
+<!-- Contact Start -->
+<div class="container-fluid pt-5">
+    <div class="text-center mb-4">
+        <h2 class="section-title px-5 mb-5"><span class="px-2">CONTACT US</span></h2>
+    </div>
+
+    <div class="row px-xl-5">
+        <div class="col-lg-7 mb-5">
+            <div class="contact-form ">
+                <div id="success"></div>
+                <form id="contact_form" method="POST" action="{% url 'contact' %}">
+                    {% csrf_token %}
+                    {% if messages %}
+                    <ul class="messages alert alert-success mt-3" id="success-message">
+                        {% for message in messages %}
+                            <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                    <div class="form-group border px-2">
+                        {{ contact_form.name }}
+                    </div>
+                    <div class="form-group border px-2">
+                        {{ contact_form.email }}
+                    </div>
+                    <div class="form-group border px-2">
+                        {{ contact_form.subject }}
+                    </div>
+                    <div class="form-group border px-2">
+                        {{ contact_form.message }}
+                    </div>
+                    <div>
+                        <button class="btn btn-primary py-2 px-4" type="submit" id="sendMessageButton">Send
+                            Message</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="col-lg-5 mb-5">
+            <h5 class="font-weight-semi-bold mb-2">Contact For Any Queries</h5>
+            <p>Justo sed diam ut sed amet duo amet lorem amet stet sea ipsum, sed duo amet et. Est elitr dolor elitr erat sit sit. Dolor diam et erat clita ipsum justo sed.</p>
+            <div class="d-flex flex-column mb-2">
+                <h5 class="font-weight-semi-bold mb-2">Store 1</h5>
+                <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-2"></i>122 Street, New York, USA</p>
+                <p class="mb-2"><i class="fa fa-envelope text-primary mr-2"></i>info@example.com</p>
+                <p class="mb-2"><i class="fa fa-phone-alt text-primary mr-2"></i>+012 245 67890</p>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Contact End -->
+{% endblock %}

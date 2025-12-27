@@ -1,0 +1,88 @@
+<!DOCTYPE html> 
+<html lang="fr">
+    {% load static %}
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title> Shop </title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="{% static 'assets/favicon.ico' %}" />
+        <!-- Bootstrap icons-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+        <!-- Fonts selected from Google fonts website-->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Metal+Mania&display=swap" rel="stylesheet">
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
+    </head>
+    <body>
+              <!-- Navigation-->
+              <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container px-4 px-lg-5">
+                    {% comment %} On met le nom de l'URL : name='index' {% endcomment %}
+                    <a class="navbar-brand fw-bold" href="{% url 'index' %}">LYNDA Shop</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                            {% comment %} récupèrer automatiquement request.user pour l'inclure dans le modèle HTML {% endcomment %}
+                            {% if  user.is_authenticated %}
+                            <li class="nav-item"><a class="nav-link active" aria-current="page" href=""> BIENVENU {{user.username}} </a></li>
+                            <li class="nav-item"><a class="nav-link active" aria-current="page" href="{% url 'index' %}">ACCUEIL</a></li>
+                            {% comment %} L'url qui va pointer vers logout, cette url pointe vers la vue logout_user, et cette vue va déconneter l'utilisateur. {% endcomment %}
+                            <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">SE DECONNECTER</a></li>
+                            {% else %}
+                            <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">SE CONNECTER</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{% url 'signup' %}">S'INSCRIRE</a></li>
+                            {% endif %}
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="{% url 'index' %}" role="button" data-bs-toggle="dropdown" aria-expanded="false">BOUTIQUE</a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <li><a class="dropdown-item" href="#!">TOUS LES ARTICLES</a></li>
+                                    <li><hr class="dropdown-divider" /></li>
+                                    <li><a class="dropdown-item" href="#!">ARTICLES POPULAIRES</a></li>
+                                    <li><a class="dropdown-item" href="#!">NOUVEAUX ARTICLES</a></li>
+                                </ul>
+                            </li>
+                            {% if user.is_superuser %}
+                            <li class="nav-item"><a class="nav-link" href="{% url 'add_product' %}">AJOUTER ARTICLE</a></li>
+                            {% endif %}
+                        </ul>
+                        {% if user.cart %}
+                        <form class="d-flex">      
+                            <a class="btn btn-outline-dark" href="{% url 'cart' %}">
+                                <i class="bi-cart-fill me-1"></i>
+                                View Cart
+                                <span class="badge bg-dark text-white ms-1 rounded-pill">({{user.cart.orders.count}})</span>
+                            </a>
+                        </form>
+                        {% endif %}
+                    </div>
+                </div>
+            </nav>
+            <!-- Header-->
+            <header class="bg-custom-pink py-5">
+                  <div class="container px-4 px-lg-5 my-5">
+                     <div class="text-center text-white">
+                        <h1 class="display-4 fw-bolder"></h1>
+                        <p class="lead fw-normal text-white-50 mb-0"></p>
+                     </div>
+                  </div>
+            </header>
+         
+        {% comment %} Balise de type un block de contenu qui sera modifié dans les fichiers qui étend le fichier de base {% endcomment %}
+        {% block content  %} 
+        {% endblock content  %}
+
+        <!-- Bootstrap core JS-->
+        <script src=https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css></script>
+        <script src= https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js></script>
+        <script src= https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js></script>
+        <script src=https://use.fontawesome.com/releases/v5.8.1/css/all.css></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="{% static 'js/scripts.js' %}"></script>
+    </body>
+    </html>  

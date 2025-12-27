@@ -1,0 +1,37 @@
+{% extends 'base.html' %} 
+{% block content%}
+
+
+<div class="container-fluid pt-5">
+    <div class="text-center mb-4">
+        <h2 class="section-title px-5 mb-5"><span class="px-2">ADD CATEGORY</span></h2>
+    </div>
+
+    <div class="row justify-content-center px-xl-5">
+        <div class="col-lg-7 mb-5">
+            <div class="contact-form ">
+                <div id="success"></div>
+                <form id="add_category_form" method="POST" action="{% url 'add_category' %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {% if messages %}
+                    <ul class="messages alert alert-success mt-3" id="success-message">
+                        {% for message in messages %}
+                            <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                    <div class="form-group border px-2">
+                        {{ add_category_form.name }}
+                    </div>
+                    <div class="form-group border px-2">
+                        {{ add_category_form.thumbnail }}
+                    </div>
+                    <div>
+                        <button class="btn btn-primary py-2 px-4" type="submit" id="sendMessageButton">Add Category</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
